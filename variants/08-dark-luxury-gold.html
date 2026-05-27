@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Веб-студия — Сайты, CRM и Telegram-сервисы под ключ</title>
+<style>
+  :root{
+    --bg:#0A0A0A;
+    --bg-alt:#111110;
+    --text:#EDE8DF;
+    --muted:#9A938A;
+    --gold:#C9A24B;
+    --gold-light:#D4AF6A;
+    --line:rgba(201,162,75,.22);
+    --line-soft:rgba(201,162,75,.12);
+    --grad:linear-gradient(135deg,#B8860B,#E6C677);
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+  section{padding:120px 0;position:relative}
+  .alt{background:var(--bg-alt)}
+
+  /* kicker */
+  .kicker{
+    font-size:11px;letter-spacing:.42em;text-transform:uppercase;
+    color:var(--gold);font-weight:600;margin-bottom:28px;
+    display:inline-block;
+  }
+  .kicker.center{display:block;text-align:center}
+
+  /* headings */
+  h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.18;letter-spacing:.01em}
+  h2{font-size:clamp(30px,4.4vw,52px);margin-bottom:22px}
+  .sec-head{max-width:720px;margin:0 auto 70px;text-align:center}
+  .sec-head p{color:var(--muted);font-size:17px;max-width:620px;margin:0 auto}
+
+  /* gold hairline */
+  .hr{height:1px;background:var(--line);border:0;width:100%}
+  .hr-grad{height:1px;background:var(--grad);width:64px;margin:0 auto 36px;opacity:.85}
+  .hr-grad.left{margin:0 0 32px}
+
+  /* buttons */
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;
+    padding:16px 34px;border-radius:4px;cursor:pointer;transition:.4s ease;
+    border:1px solid var(--gold);position:relative;
+  }
+  .btn-primary{background:var(--grad);color:#1a1408;border-color:transparent}
+  .btn-primary:hover{box-shadow:0 0 28px rgba(212,175,106,.4);transform:translateY(-2px)}
+  .btn-ghost{background:transparent;color:var(--gold-light)}
+  .btn-ghost:hover{background:rgba(201,162,75,.08);box-shadow:0 0 22px rgba(201,162,75,.18)}
+
+  /* header */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:rgba(10,10,10,.72);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line-soft);transition:.4s;
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:78px}
+  .logo{font-family:var(--serif);font-size:23px;letter-spacing:.02em}
+  .logo b{color:var(--gold)}
+  .nav-links{display:flex;gap:38px;list-style:none}
+  .nav-links a{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:.3s;position:relative}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--gold);transition:.35s}
+  .nav-links a:hover{color:var(--text)}
+  .nav-links a:hover::after{width:100%}
+  .nav .btn{padding:12px 24px}
+  .burger{display:none;background:none;border:0;color:var(--gold);font-size:24px;cursor:pointer}
+
+  /* hero */
+  .hero{padding:200px 0 130px;text-align:center;position:relative;overflow:hidden}
+  .hero::before{
+    content:"";position:absolute;top:-30%;left:50%;transform:translateX(-50%);
+    width:900px;height:900px;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,162,75,.10),transparent 62%);
+    pointer-events:none;
+  }
+  .hero h1{font-size:clamp(40px,6.6vw,82px);margin:14px auto 26px;max-width:920px;position:relative}
+  .hero .sub{color:var(--muted);font-size:19px;max-width:680px;margin:0 auto 44px;position:relative}
+  .hero-btns{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;position:relative}
+  .stats{display:flex;justify-content:center;gap:0;margin-top:80px;flex-wrap:wrap;position:relative}
+  .stat{padding:0 46px;text-align:center;border-right:1px solid var(--line)}
+  .stat:last-child{border-right:0}
+  .stat .num{font-family:var(--serif);font-size:34px;color:var(--gold-light)}
+  .stat .lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+
+  /* services grid */
+  .grid{display:grid;gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+  .grid-4{grid-template-columns:repeat(4,1fr)}
+  .card{
+    padding:40px 34px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+    transition:.45s ease;position:relative;
+  }
+  .card:hover{background:rgba(201,162,75,.04)}
+  .card .ico{font-size:26px;margin-bottom:20px;display:block;filter:grayscale(.2)}
+  .card h3{font-size:21px;margin-bottom:18px}
+  .card ul{list-style:none}
+  .card li{font-size:14px;color:var(--muted);padding:6px 0 6px 18px;position:relative}
+  .card li::before{content:"";position:absolute;left:0;top:14px;width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+
+  /* prices */
+  .prices{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .price{
+    border:1px solid var(--line);border-radius:6px;padding:34px 28px;transition:.45s ease;
+    position:relative;background:rgba(255,255,255,.012);
+  }
+  .price:hover{border-color:var(--gold);transform:translateY(-5px);box-shadow:0 14px 40px rgba(0,0,0,.5)}
+  .price.feat{border-color:var(--gold)}
+  .badge{
+    position:absolute;top:-12px;right:24px;background:var(--grad);color:#1a1408;
+    font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;
+    padding:5px 14px;border-radius:3px;
+  }
+  .price h3{font-size:18px;margin-bottom:18px;min-height:48px;display:flex;align-items:center}
+  .price .amt{font-family:var(--serif);font-size:26px;color:var(--gold-light);line-height:1.2}
+  .price .usd{font-size:13px;color:var(--muted);margin-top:4px}
+  .price .term{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin:16px 0;padding:6px 0;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+  .price ul{list-style:none;margin-top:14px}
+  .price li{font-size:13px;color:var(--muted);padding:5px 0 5px 16px;position:relative}
+  .price li::before{content:"—";position:absolute;left:0;color:var(--gold);opacity:.6}
+  .note{text-align:center;color:var(--muted);font-size:14px;margin-top:40px;font-style:italic}
+
+  /* includes */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .col{padding:50px 46px}
+  .col:first-child{border-right:1px solid var(--line)}
+  .col h3{font-size:24px;margin-bottom:8px}
+  .col .lead{color:var(--muted);font-size:14px;margin-bottom:28px}
+  .col ul{list-style:none}
+  .col li{padding:11px 0 11px 30px;position:relative;border-bottom:1px solid var(--line-soft);font-size:15px}
+  .col li:last-child{border-bottom:0}
+  .yes li::before{content:"✓";position:absolute;left:0;color:var(--gold);font-weight:700}
+  .no li::before{content:"×";position:absolute;left:0;color:var(--muted);font-weight:700}
+  .no li{color:var(--muted)}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-bottom:60px}
+  .step{text-align:center;padding:0 18px;position:relative}
+  .step:not(:last-child)::after{content:"";position:absolute;top:26px;right:-50%;width:100%;height:1px;background:var(--line)}
+  .step .n{
+    width:54px;height:54px;border-radius:50%;border:1px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 18px;
+    font-family:var(--serif);font-size:22px;color:var(--gold-light);background:var(--bg);position:relative;z-index:2;
+  }
+  .step h4{font-size:16px;font-weight:600;letter-spacing:.04em}
+  .conds{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line)}
+  .cond{padding:32px 26px;border-right:1px solid var(--line)}
+  .cond:last-child{border-right:0}
+  .cond h4{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;font-family:var(--sans);font-weight:600}
+  .cond p{font-size:14px;color:var(--muted)}
+
+  /* cta */
+  .cta{text-align:center}
+  .cta h2{margin-bottom:16px}
+  .cta p{color:var(--muted);margin-bottom:38px;font-size:17px}
+  .cta-btns{display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+
+  /* footer */
+  footer{background:#070707;border-top:1px solid var(--line-soft);padding:56px 0}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+  .foot-links{display:flex;gap:32px;flex-wrap:wrap}
+  .foot-links a{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:.3s}
+  .foot-links a:hover{color:var(--gold)}
+  .copy{font-size:13px;color:var(--muted);letter-spacing:.04em}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity 1.1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* responsive */
+  @media(max-width:1000px){
+    .grid-4{grid-template-columns:repeat(2,1fr)}
+    .prices{grid-template-columns:repeat(2,1fr)}
+    .steps{grid-template-columns:repeat(2,1fr);gap:40px 0}
+    .step::after{display:none}
+    .conds{grid-template-columns:repeat(2,1fr)}
+    .cond:nth-child(2){border-right:0}
+  }
+  @media(max-width:680px){
+    .wrap{padding:0 22px}
+    section{padding:84px 0}
+    .nav-links,.nav .btn{display:none}
+    .burger{display:block}
+    .grid-4{grid-template-columns:1fr}
+    .prices{grid-template-columns:1fr}
+    .two{grid-template-columns:1fr}
+    .col:first-child{border-right:0;border-bottom:1px solid var(--line)}
+    .conds{grid-template-columns:1fr}
+    .cond{border-right:0;border-bottom:1px solid var(--line)}
+    .stat{padding:14px 24px;border-right:0;border-bottom:1px solid var(--line)}
+    .stat:last-child{border-bottom:0}
+    .hero{padding:150px 0 90px}
+    .mobile-nav.open{display:flex}
+  }
+  .mobile-nav{display:none;flex-direction:column;gap:6px;padding:14px 22px 22px;border-top:1px solid var(--line-soft)}
+  .mobile-nav a{padding:12px 0;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line-soft)}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="wrap">
+    <nav class="nav">
+      <div class="logo">Веб-<b>студия</b></div>
+      <ul class="nav-links">
+        <li><a href="#services">Услуги</a></li>
+        <li><a href="#prices">Цены</a></li>
+        <li><a href="#process">Как работаем</a></li>
+        <li><a href="#contacts">Контакты</a></li>
+      </ul>
+      <a href="#contacts" class="btn btn-ghost">Обсудить проект</a>
+      <button class="burger" id="burger" aria-label="Меню">☰</button>
+    </nav>
+  </div>
+  <div class="mobile-nav" id="mnav">
+    <a href="#services">Услуги</a>
+    <a href="#prices">Цены</a>
+    <a href="#process">Как работаем</a>
+    <a href="#contacts">Контакты</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <span class="kicker">Принимаю заказы · Кыргызстан и удалённо</span>
+    <h1>Сайты, CRM и Telegram-сервисы под ключ</h1>
+    <p class="sub">Веб-разработка для бизнеса: от лендингов и магазинов до CRM, ботов и AI-автоматизации. Прозрачные сроки и расценки.</p>
+    <div class="hero-btns">
+      <a href="#contacts" class="btn btn-primary">Заказать проект</a>
+      <a href="#prices" class="btn btn-ghost">Смотреть цены</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="num">10+</div><div class="lbl">направлений</div></div>
+      <div class="stat"><div class="num">3 дня</div><div class="lbl">запуск лендинга</div></div>
+      <div class="stat"><div class="num">14 дней</div><div class="lbl">гарантия</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="alt" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker center">Что я делаю</span>
+      <div class="hr-grad"></div>
+      <h2>Услуги студии</h2>
+      <p>Полный цикл цифровых решений — от первого экрана до сложных систем автоматизации.</p>
+    </div>
+    <div class="grid grid-4 reveal">
+      <div class="card"><span class="ico">◆</span><h3>Сайты и лендинги</h3><ul><li>Landing Page</li><li>Корпоративные сайты</li><li>Сайты услуг и заведений</li><li>Многостраничные</li></ul></div>
+      <div class="card"><span class="ico">◆</span><h3>WordPress</h3><ul><li>Под ключ</li><li>Elementor / Gutenberg</li><li>WooCommerce</li><li>Мультиязычность / скорость</li></ul></div>
+      <div class="card"><span class="ico">◆</span><h3>CRM и системы</h3><ul><li>CRM и панели</li><li>Личные кабинеты</li><li>Учёт и аналитика</li><li>Автоматизация</li></ul></div>
+      <div class="card"><span class="ico">◆</span><h3>Telegram-решения</h3><ul><li>Приём заявок / заказов</li><li>Онлайн-запись</li><li>Интеграции с CRM</li><li>Mini Apps</li></ul></div>
+      <div class="card"><span class="ico">◆</span><h3>Интернет-магазины</h3><ul><li>Каталог и корзина</li><li>Фильтры и оплата</li><li>Уведомления в Telegram</li><li>Интеграции со складом</li></ul></div>
+      <div class="card"><span class="ico">◆</span><h3>AI и автоматизация</h3><ul><li>AI-ассистенты</li><li>Генерация контента</li><li>Обработка данных</li><li>AI-workflow</li></ul></div>
+      <div class="card"><span class="ico">◆</span><h3>Интеграции</h3><ul><li>1С</li><li>Google Sheets</li><li>Платёжные системы</li><li>Сторонние API</li></ul></div>
+      <div class="card"><span class="ico">◆</span><h3>Поддержка</h3><ul><li>Доработки</li><li>Перенос со старых систем</li><li>Обновления и бэкапы</li><li>Консультации</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICES -->
+<section id="prices">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker center">Стоимость</span>
+      <div class="hr-grad"></div>
+      <h2>Прозрачные цены</h2>
+      <p>Ориентировочные вилки. Точная цена — после брифа или короткого ТЗ. Курс ~89 сом/$.</p>
+    </div>
+    <div class="prices reveal">
+      <div class="price"><h3>Landing Page</h3><div class="amt">15 000–40 000 сом</div><div class="usd">≈ $170–450</div><div class="term">3–10 дней</div><ul><li>Один экран-история</li><li>Адаптив и форма</li><li>Базовое SEO</li></ul></div>
+      <div class="price"><h3>Корпоративный сайт</h3><div class="amt">30 000–120 000 сом</div><div class="usd">≈ $340–1 350</div><div class="term">1–4 недели</div><ul><li>Многостраничная структура</li><li>Дизайн под бренд</li><li>CMS-управление</li></ul></div>
+      <div class="price feat"><div class="badge">Популярно</div><h3>Интернет-магазин</h3><div class="amt">60 000–250 000 сом</div><div class="usd">≈ $670–2 800</div><div class="term">2–6 недель</div><ul><li>Каталог и корзина</li><li>Онлайн-оплата</li><li>Telegram-уведомления</li></ul></div>
+      <div class="price"><h3>CRM / системы</h3><div class="amt">от 120 000 сом</div><div class="usd">≈ от $1 350</div><div class="term">от 1 месяца · поэтапно</div><ul><li>Панели и кабинеты</li><li>Учёт и аналитика</li><li>Интеграции</li></ul></div>
+      <div class="price"><h3>Telegram-бот</h3><div class="amt">10 000–80 000 сом</div><div class="usd">≈ $110–900</div><div class="term">3–20 дней</div><ul><li>Приём заявок</li><li>Онлайн-запись</li><li>Связь с CRM</li></ul></div>
+      <div class="price"><h3>Telegram Mini App</h3><div class="amt">от 40 000 сом</div><div class="usd">≈ от $450</div><div class="term">от 2 недель</div><ul><li>Витрина / сервис в TG</li><li>Авторизация</li><li>Платежи</li></ul></div>
+      <div class="price"><h3>AI / автоматизация</h3><div class="amt">от 20 000 сом</div><div class="usd">≈ от $225</div><div class="term">от 1 недели</div><ul><li>AI-ассистенты</li><li>Обработка данных</li><li>Workflow-сценарии</li></ul></div>
+      <div class="price"><h3>Доработки и поддержка</h3><div class="amt">от 1 500 сом/час</div><div class="usd">≈ от $17/час</div><div class="term">подписка от 5 000 сом/мес</div><ul><li>Правки и обновления</li><li>Бэкапы</li><li>Консультации</li></ul></div>
+    </div>
+    <p class="note reveal">Возможны фиксированная стоимость, почасовая работа или поэтапная разработка. Предоплата 50%.</p>
+  </div>
+</section>
+
+<!-- INCLUDES -->
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker center">Прозрачность</span>
+      <div class="hr-grad"></div>
+      <h2>Что входит, а что отдельно</h2>
+    </div>
+    <div class="two reveal">
+      <div class="col">
+        <h3>Входит в стоимость</h3>
+        <p class="lead">База каждого проекта без скрытых доплат.</p>
+        <ul class="yes">
+          <li>Анализ задачи и консультация</li>
+          <li>Проектирование решения</li>
+          <li>Адаптация под мобильные</li>
+          <li>Базовая SEO-подготовка</li>
+          <li>Подключение домена и хостинга</li>
+          <li>Telegram-интеграции</li>
+          <li>Тестирование перед запуском</li>
+          <li>Гарантия 14 дней после сдачи</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Оплачивается отдельно</h3>
+        <p class="lead">Внешние сервисы и материалы — по факту.</p>
+        <ul class="no">
+          <li>Домен и хостинг (от ~1 500 сом/год)</li>
+          <li>Платные плагины, темы и API</li>
+          <li>Профессиональные фото и видео</li>
+          <li>Копирайтинг / тексты</li>
+          <li>Платное SEO-продвижение и реклама</li>
+          <li>Наполнение большим объёмом контента</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker center">Процесс</span>
+      <div class="hr-grad"></div>
+      <h2>Как мы работаем</h2>
+      <p>Понятные этапы и зафиксированные договорённости с первого дня.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step"><div class="n">1</div><h4>Бриф</h4></div>
+      <div class="step"><div class="n">2</div><h4>Решение</h4></div>
+      <div class="step"><div class="n">3</div><h4>Смета</h4></div>
+      <div class="step"><div class="n">4</div><h4>Разработка</h4></div>
+      <div class="step"><div class="n">5</div><h4>Поддержка</h4></div>
+    </div>
+    <div class="conds reveal">
+      <div class="cond"><h4>Оплата</h4><p>Предоплата 50%, остаток после сдачи. Крупные проекты — поэтапно.</p></div>
+      <div class="cond"><h4>Гарантия</h4><p>Ошибки исправляю бесплатно в течение 14 дней.</p></div>
+      <div class="cond"><h4>Сроки</h4><p>Фиксируются перед стартом. Правки в рамках ТЗ — бесплатно.</p></div>
+      <div class="cond"><h4>Формат</h4><p>Работаю по Кыргызстану и удалённо.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="alt cta" id="contacts">
+  <div class="wrap reveal">
+    <span class="kicker center">Контакты</span>
+    <div class="hr-grad"></div>
+    <h2>Обсудим ваш проект?</h2>
+    <p>Расскажите задачу — предложу решение, сроки и стоимость.</p>
+    <div class="cta-btns">
+      <a href="https://t.me/username" class="btn btn-primary">Telegram</a>
+      <a href="https://wa.me/996XXXXXXXXX" class="btn btn-ghost">WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="logo">Веб-<b>студия</b></div>
+      <div class="foot-links">
+        <a href="https://t.me/username">Telegram</a>
+        <a href="https://wa.me/996XXXXXXXXX">WhatsApp</a>
+        <a href="mailto:email@example.com">Email</a>
+      </div>
+      <div class="copy">© 2026 · Веб-разработка в Кыргызстане</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile menu
+  const burger=document.getElementById('burger'),mnav=document.getElementById('mnav');
+  burger.addEventListener('click',()=>mnav.classList.toggle('open'));
+  mnav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mnav.classList.remove('open')));
+
+  // reveal on scroll
+  const io=new IntersectionObserver((es)=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // header shadow
+  const hdr=document.getElementById('hdr');
+  addEventListener('scroll',()=>{hdr.style.borderBottomColor=scrollY>40?'rgba(201,162,75,.22)':'rgba(201,162,75,.12)'});
+</script>
+</body>
+</html>
