@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Варианты дизайна лендинга — галерея</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:#0B1020;color:#E8ECF6;line-height:1.6;padding:50px 22px}
+  .wrap{max-width:1180px;margin:0 auto}
+  .head{text-align:center;margin-bottom:44px}
+  h1{font-size:34px;font-weight:800;letter-spacing:-.5px;margin-bottom:10px}
+  .head p{color:#9AA6C4;max-width:620px;margin:0 auto}
+  .grad{background:linear-gradient(120deg,#818CF8,#C084FC 50%,#22D3EE);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  .card{background:#151D38;border:1px solid rgba(255,255,255,.09);border-radius:18px;overflow:hidden;
+    transition:.25s;text-decoration:none;color:inherit;display:block}
+  .card:hover{transform:translateY(-5px);border-color:rgba(139,92,246,.5);box-shadow:0 22px 50px rgba(0,0,0,.4)}
+  .thumb{width:100%;aspect-ratio:1440/900;object-fit:cover;object-position:top;display:block;border-bottom:1px solid rgba(255,255,255,.07);background:#0B1020}
+  .meta{padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .meta .t{font-size:17px;font-weight:700}
+  .meta .d{font-size:13px;color:#9AA6C4;margin-top:2px}
+  .tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:6px 11px;border-radius:999px;
+    background:rgba(139,92,246,.16);color:#C4B5FD;white-space:nowrap}
+  .tag.cur{background:rgba(34,197,94,.16);color:#86EFAC}
+  .open{font-size:13px;color:#58A6FF;margin-top:4px;display:inline-block}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <h1>Варианты дизайна <span class="grad">лендинга</span></h1>
+    <p>6 стилей с одинаковым контентом и ценами. Открой любой, чтобы посмотреть вживую. Текущий помечен зелёным.</p>
+  </div>
+  <div class="grid">
+
+    <a class="card" href="../landing/index.html">
+      <img class="thumb" src="_preview-00-original.png" alt="Оригинал">
+      <div class="meta">
+        <div><div class="t">Текущий — Dark Gradient</div><div class="d">Тёмная тема, плоские карточки, градиент</div><span class="open">Открыть →</span></div>
+        <span class="tag cur">Текущий</span>
+      </div>
+    </a>
+
+    <a class="card" href="01-light-corporate.html">
+      <img class="thumb" src="_preview-01-light-corporate.png" alt="Light Corporate">
+      <div class="meta">
+        <div><div class="t">1 · Light Corporate</div><div class="d">Светлый SaaS-стиль, индиго-акцент, воздух</div><span class="open">Открыть →</span></div>
+        <span class="tag">Вариант</span>
+      </div>
+    </a>
+
+    <a class="card" href="02-brutalist.html">
+      <img class="thumb" src="_preview-02-brutalist.png" alt="Neo-Brutalist">
+      <div class="meta">
+        <div><div class="t">2 · Neo-Brutalist</div><div class="d">Толстые рамки, лайм, дерзкая типографика</div><span class="open">Открыть →</span></div>
+        <span class="tag">Вариант</span>
+      </div>
+    </a>
+
+    <a class="card" href="03-aurora-glass.html">
+      <img class="thumb" src="_preview-03-aurora-glass.png" alt="Aurora Glass">
+      <div class="meta">
+        <div><div class="t">3 · Aurora Glass</div><div class="d">Цветные градиенты + матовое стекло</div><span class="open">Открыть →</span></div>
+        <span class="tag">Вариант</span>
+      </div>
+    </a>
+
+    <a class="card" href="04-terminal-dev.html">
+      <img class="thumb" src="_preview-04-terminal-dev.png" alt="Terminal Dev">
+      <div class="meta">
+        <div><div class="t">4 · Terminal / Dev</div><div class="d">Стиль редактора кода, моноширинный, для своих</div><span class="open">Открыть →</span></div>
+        <span class="tag">Вариант</span>
+      </div>
+    </a>
+
+    <a class="card" href="05-editorial-warm.html">
+      <img class="thumb" src="_preview-05-editorial-warm.png" alt="Editorial Warm">
+      <div class="meta">
+        <div><div class="t">5 · Editorial Warm</div><div class="d">Тёплая палитра, serif-заголовки, премиум</div><span class="open">Открыть →</span></div>
+        <span class="tag">Вариант</span>
+      </div>
+    </a>
+
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~/веб-студия — Сайты, CRM и Telegram-сервисы под ключ</title>
+<style>
+  :root{
+    --bg:#0D1117;
+    --panel:#161B22;
+    --panel2:#0B0E14;
+    --border:#30363D;
+    --green:#3FB950;
+    --blue:#58A6FF;
+    --purple:#BC8CFF;
+    --orange:#FFA657;
+    --yellow:#E3B341;
+    --comment:#8B949E;
+    --text:#C9D1D9;
+    --red:#FF7B72;
+    --mono:ui-monospace,"SF Mono",Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--mono);
+    font-size:15px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  .cmt{color:var(--comment)}
+  .green{color:var(--green)}
+  .blue{color:var(--blue)}
+  .purple{color:var(--purple)}
+  .orange{color:var(--orange)}
+  .yellow{color:var(--yellow)}
+  .red{color:var(--red)}
+
+  /* ===== window chrome ===== */
+  .chrome{
+    display:flex;align-items:center;gap:8px;
+    padding:10px 14px;
+    background:var(--panel);
+    border-bottom:1px solid var(--border);
+    font-size:12.5px;color:var(--comment);
+  }
+  .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .dot.r{background:#FF5F56}.dot.y{background:#FFBD2E}.dot.g{background:#27C93F}
+  .dots{display:flex;gap:7px;margin-right:8px}
+
+  /* ===== header ===== */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(13,17,23,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .logo{font-weight:700;font-size:16px;color:var(--text)}
+  .logo .t{color:var(--green)}
+  .logo .tag{color:var(--blue)}
+  .navlinks{display:flex;gap:22px;align-items:center}
+  .navlinks a{color:var(--text);font-size:14px}
+  .navlinks a:hover{color:var(--blue);text-decoration:none}
+  .btn{
+    display:inline-flex;align-items:center;gap:7px;
+    border:1px solid var(--border);border-radius:8px;
+    padding:9px 16px;font-family:var(--mono);font-size:14px;cursor:pointer;
+    background:var(--panel);color:var(--text);transition:.15s;
+  }
+  .btn:hover{border-color:var(--green);color:var(--green);text-decoration:none}
+  .btn-primary{background:var(--green);color:#0D1117;border-color:var(--green);font-weight:600}
+  .btn-primary:hover{background:#2ea043;color:#0D1117;border-color:#2ea043}
+  .btn-blue{background:var(--blue);color:#0D1117;border-color:var(--blue);font-weight:600}
+  .btn-blue:hover{background:#388bfd;color:#0D1117}
+  .menu-toggle{display:none;background:none;border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:18px;padding:6px 11px;cursor:pointer;font-family:var(--mono)}
+
+  /* ===== sections ===== */
+  section{padding:64px 0}
+  .sec-label{color:var(--comment);font-size:15px;margin-bottom:8px}
+  .sec-label b{color:var(--purple);font-weight:400}
+  .sec-title{font-size:26px;color:var(--text);margin-bottom:10px;font-weight:700}
+  .sec-sub{color:var(--comment);max-width:760px;margin-bottom:30px;font-size:14.5px}
+
+  /* ===== hero ===== */
+  .hero{padding-top:50px;padding-bottom:40px}
+  .terminal{
+    border:1px solid var(--border);border-radius:12px;overflow:hidden;
+    box-shadow:0 16px 50px rgba(0,0,0,.5);
+    background:var(--panel2);
+  }
+  .term-body{padding:26px 26px 34px}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    border:1px solid var(--border);border-radius:20px;
+    padding:5px 13px;font-size:13px;color:var(--comment);margin-bottom:22px;
+  }
+  .badge .live{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .prompt{color:var(--comment);font-size:14px;margin-bottom:6px}
+  .prompt .dollar{color:var(--green)}
+  h1{font-size:clamp(28px,5vw,44px);line-height:1.18;color:var(--text);margin:14px 0 6px;font-weight:700}
+  h1 .accent{color:var(--blue)}
+  .cursor{display:inline-block;width:11px;height:1em;background:var(--green);margin-left:3px;vertical-align:-2px;animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .hero-sub{color:var(--text);max-width:680px;margin:14px 0 26px;font-size:15.5px;line-height:1.7}
+  .hero-sub .o{color:var(--orange)}
+  .hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px}
+  .stats{display:flex;gap:14px;flex-wrap:wrap}
+  .stat{
+    flex:1;min-width:180px;
+    border:1px solid var(--border);border-radius:9px;
+    padding:14px 16px;background:var(--panel);
+  }
+  .stat .v{color:var(--yellow);font-size:18px;font-weight:700}
+  .stat .l{color:var(--comment);font-size:12.5px;margin-top:2px}
+
+  /* ===== cards grid ===== */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:18px}
+  .panel{
+    border:1px solid var(--border);border-radius:10px;
+    background:var(--panel);overflow:hidden;transition:.18s;
+  }
+  .panel:hover{border-color:var(--blue);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .panel-head{
+    display:flex;align-items:center;gap:7px;
+    padding:8px 12px;background:var(--panel2);
+    border-bottom:1px solid var(--border);font-size:12px;color:var(--comment);
+  }
+  .panel-body{padding:16px 18px}
+  .panel-icon{font-size:24px;margin-bottom:8px}
+  .panel-title{color:var(--text);font-size:16px;font-weight:700;margin-bottom:12px}
+  .panel ul{list-style:none}
+  .panel li{font-size:13.5px;color:var(--text);padding:3px 0;padding-left:18px;position:relative}
+  .panel li::before{content:"›";position:absolute;left:0;color:var(--green)}
+
+  /* ===== pricing ===== */
+  .price{position:relative}
+  .price.popular{border-color:var(--green);box-shadow:0 0 0 1px var(--green)}
+  .pop-tag{position:absolute;top:-10px;right:14px;background:var(--green);color:#0D1117;font-size:11px;font-weight:700;padding:2px 10px;border-radius:12px}
+  .price-line{margin:6px 0 4px;font-size:13.5px}
+  .price-val{color:var(--green);font-size:20px;font-weight:700}
+  .price-usd{color:var(--comment);font-size:13px}
+  .price-term{color:var(--orange);font-size:13px;margin-bottom:10px}
+  .pvar{color:var(--blue)}
+  .note{
+    margin-top:24px;border:1px dashed var(--border);border-radius:9px;
+    padding:14px 16px;font-size:13.5px;color:var(--comment);background:var(--panel2);
+  }
+  .note .h{color:var(--yellow)}
+
+  /* ===== scope ===== */
+  .scope-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .scope-col .panel-body{padding:18px}
+  .scope-col li{padding:4px 0;padding-left:24px;font-size:13.5px;list-style:none;position:relative}
+  .scope-in li::before{content:"+";position:absolute;left:0;color:var(--green);font-weight:700}
+  .scope-out li{color:var(--comment)}
+  .scope-out li::before{content:"-";position:absolute;left:0;color:var(--red);font-weight:700}
+
+  /* ===== process ===== */
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:28px}
+  .step{
+    border:1px solid var(--border);border-radius:10px;background:var(--panel);
+    padding:16px;transition:.18s;
+  }
+  .step:hover{border-color:var(--purple)}
+  .step .num{color:var(--purple);font-size:13px;font-weight:700}
+  .step .t{color:var(--text);font-size:15px;font-weight:700;margin-top:6px}
+  .step .d{color:var(--comment);font-size:12.5px;margin-top:5px}
+  .terms{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .term-card{border:1px solid var(--border);border-radius:10px;background:var(--panel);padding:16px}
+  .term-card .ic{font-size:20px}
+  .term-card .t{color:var(--text);font-size:14.5px;font-weight:700;margin:6px 0}
+  .term-card .d{color:var(--comment);font-size:12.5px}
+
+  /* ===== cta ===== */
+  .cta{
+    border:1px solid var(--border);border-radius:14px;overflow:hidden;
+    background:var(--panel2);
+  }
+  .cta-body{padding:40px 30px;text-align:center}
+  .cta h2{font-size:28px;color:var(--text);margin-bottom:8px}
+  .cta p{color:var(--comment);margin-bottom:24px}
+  .cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+  /* ===== footer ===== */
+  footer{border-top:1px solid var(--border);padding:30px 0;color:var(--comment);font-size:13.5px}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  .foot-links{display:flex;gap:20px;flex-wrap:wrap}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.show{opacity:1;transform:none}
+
+  /* ===== responsive ===== */
+  @media(max-width:860px){
+    .steps{grid-template-columns:repeat(2,1fr)}
+    .terms{grid-template-columns:repeat(2,1fr)}
+    .scope-grid{grid-template-columns:1fr}
+  }
+  @media(max-width:680px){
+    .navlinks{
+      display:none;position:absolute;top:60px;left:0;right:0;
+      flex-direction:column;gap:0;background:var(--panel);
+      border-bottom:1px solid var(--border);padding:8px 20px 16px;
+    }
+    .navlinks.open{display:flex}
+    .navlinks a{padding:10px 0;border-bottom:1px solid var(--border);width:100%}
+    .navlinks .btn{margin-top:10px;justify-content:center}
+    .menu-toggle{display:block}
+    .steps{grid-template-columns:1fr}
+    .terms{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo"><span class="cmt">~/</span><span class="t">веб</span>-студия <span class="tag">&lt;dev/&gt;</span></a>
+    <nav class="navlinks" id="nav">
+      <a href="#services">Услуги</a>
+      <a href="#pricing">Цены</a>
+      <a href="#process">Как&nbsp;работаем</a>
+      <a href="#contact">Контакты</a>
+      <a href="#contact" class="btn btn-primary"><span class="dollar">$</span> обсудить-проект</a>
+    </nav>
+    <button class="menu-toggle" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<a id="top"></a>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="wrap">
+    <div class="terminal reveal">
+      <div class="chrome">
+        <span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span>
+        <span>bash — ~/веб-студия — 80×24</span>
+      </div>
+      <div class="term-body">
+        <span class="badge"><span class="live"></span>online · Кыргызстан и удалённо</span>
+        <div class="prompt"><span class="dollar">$</span> ./start --project</div>
+        <h1>Сайты, CRM и <span class="accent">Telegram-сервисы</span> под ключ<span class="cursor"></span></h1>
+        <p class="hero-sub">
+          <span class="cmt"># </span>Веб-разработка для бизнеса: от лендингов и магазинов до CRM,
+          ботов и <span class="o">AI-автоматизации</span>. Прозрачные сроки и расценки.
+        </p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn btn-primary"><span class="dollar">$</span> Заказать проект</a>
+          <a href="#pricing" class="btn">Смотреть цены →</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="v">10+</div><div class="l">// направлений</div></div>
+          <div class="stat"><div class="v">от 3 дней</div><div class="l">// запуск лендинга</div></div>
+          <div class="stat"><div class="v">14 дней</div><div class="l">// гарантия</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-label reveal"><b>//</b> services</div>
+    <h2 class="sec-title reveal">Что мы разрабатываем</h2>
+    <p class="sec-sub reveal"><span class="cmt"># </span>Полный стек услуг для запуска и автоматизации бизнеса в вебе.</p>
+    <div class="grid">
+
+      <div class="panel reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> sites.js</div>
+        <div class="panel-body">
+          <div class="panel-icon">🌐</div>
+          <div class="panel-title">Сайты и лендинги</div>
+          <ul><li>Landing Page</li><li>Корпоративные сайты</li><li>Сайты услуг и заведений</li><li>Многостраничные</li></ul>
+        </div>
+      </div>
+
+      <div class="panel reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> wordpress.php</div>
+        <div class="panel-body">
+          <div class="panel-icon">🧩</div>
+          <div class="panel-title">WordPress</div>
+          <ul><li>Под ключ</li><li>Elementor / Gutenberg</li><li>WooCommerce</li><li>Мультиязычность / скорость</li></ul>
+        </div>
+      </div>
+
+      <div class="panel reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> crm.py</div>
+        <div class="panel-body">
+          <div class="panel-icon">⚙️</div>
+          <div class="panel-title">CRM и системы</div>
+          <ul><li>CRM и панели</li><li>Личные кабинеты</li><li>Учёт и аналитика</li><li>Автоматизация</li></ul>
+        </div>
+      </div>
+
+      <div class="panel reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> telegram.ts</div>
+        <div class="panel-body">
+          <div class="panel-icon">🤖</div>
+          <div class="panel-title">Telegram-решения</div>
+          <ul><li>Приём заявок / заказов</li><li>Онлайн-запись</li><li>Интеграции с CRM</li><li>Mini Apps</li></ul>
+        </div>
+      </div>
+
+      <div class="panel reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> shop.js</div>
+        <div class="panel-body">
+          <div class="panel-icon">🛒</div>
+          <div class="panel-title">Интернет-магазины</div>
+          <ul><li>Каталог и корзина</li><li>Фильтры и оплата</li><li>Уведомления в Telegram</li><li>Интеграции со складом</li></ul>
+        </div>
+      </div>
+
+      <div class="panel reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> ai.py</div>
+        <div class="panel-body">
+          <div class="panel-icon">✨</div>
+          <div class="panel-title">AI и автоматизация</div>
+          <ul><li>AI-ассистенты</li><li>Генерация контента</li><li>Обработка данных</li><li>AI-workflow</li></ul>
+        </div>
+      </div>
+
+      <div class="panel reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> api.json</div>
+        <div class="panel-body">
+          <div class="panel-icon">🔗</div>
+          <div class="panel-title">Интеграции</div>
+          <ul><li>1С</li><li>Google Sheets</li><li>Платёжные системы</li><li>Сторонние API</li></ul>
+        </div>
+      </div>
+
+      <div class="panel reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> support.sh</div>
+        <div class="panel-body">
+          <div class="panel-icon">🛠️</div>
+          <div class="panel-title">Поддержка</div>
+          <ul><li>Доработки</li><li>Перенос со старых систем</li><li>Обновления и бэкапы</li><li>Консультации</li></ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-label reveal"><b>//</b> pricing</div>
+    <h2 class="sec-title reveal">Цены и сроки</h2>
+    <p class="sec-sub reveal"><span class="cmt"># </span>Ориентировочные вилки. Точная цена — после брифа или короткого ТЗ. Курс ~89 сом/$.</p>
+    <div class="grid">
+
+      <div class="panel price reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> landing</div>
+        <div class="panel-body">
+          <div class="panel-icon">🌐</div>
+          <div class="panel-title">Landing Page</div>
+          <div class="price-line"><span class="pvar">const</span> price =</div>
+          <div class="price-val">15 000–40 000 <span style="font-size:13px;color:var(--comment)">сом</span></div>
+          <div class="price-usd">≈ $170–450</div>
+          <div class="price-term">⏱ 3–10 дней</div>
+          <ul><li>Дизайн и адаптив</li><li>Форма заявки</li><li>Базовое SEO</li><li>Запуск под ключ</li></ul>
+        </div>
+      </div>
+
+      <div class="panel price reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> corporate</div>
+        <div class="panel-body">
+          <div class="panel-icon">🏢</div>
+          <div class="panel-title">Корпоративный сайт</div>
+          <div class="price-line"><span class="pvar">const</span> price =</div>
+          <div class="price-val">30 000–120 000 <span style="font-size:13px;color:var(--comment)">сом</span></div>
+          <div class="price-usd">≈ $340–1 350</div>
+          <div class="price-term">⏱ 1–4 недели</div>
+          <ul><li>Многостраничность</li><li>CMS-админка</li><li>Каталог услуг</li><li>Аналитика</li></ul>
+        </div>
+      </div>
+
+      <div class="panel price popular reveal">
+        <span class="pop-tag">popular</span>
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> shop</div>
+        <div class="panel-body">
+          <div class="panel-icon">🛒</div>
+          <div class="panel-title">Интернет-магазин</div>
+          <div class="price-line"><span class="pvar">const</span> price =</div>
+          <div class="price-val">60 000–250 000 <span style="font-size:13px;color:var(--comment)">сом</span></div>
+          <div class="price-usd">≈ $670–2 800</div>
+          <div class="price-term">⏱ 2–6 недель</div>
+          <ul><li>Каталог и корзина</li><li>Оплата онлайн</li><li>Уведомления в Telegram</li><li>Интеграции</li></ul>
+        </div>
+      </div>
+
+      <div class="panel price reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> crm</div>
+        <div class="panel-body">
+          <div class="panel-icon">⚙️</div>
+          <div class="panel-title">CRM / системы</div>
+          <div class="price-line"><span class="pvar">const</span> price =</div>
+          <div class="price-val">от 120 000 <span style="font-size:13px;color:var(--comment)">сом</span></div>
+          <div class="price-usd">≈ от $1 350</div>
+          <div class="price-term">⏱ от 1 месяца (поэтапно)</div>
+          <ul><li>Кастомная логика</li><li>Роли и доступы</li><li>Отчёты</li><li>Интеграции</li></ul>
+        </div>
+      </div>
+
+      <div class="panel price reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> tg-bot</div>
+        <div class="panel-body">
+          <div class="panel-icon">🤖</div>
+          <div class="panel-title">Telegram-бот</div>
+          <div class="price-line"><span class="pvar">const</span> price =</div>
+          <div class="price-val">10 000–80 000 <span style="font-size:13px;color:var(--comment)">сом</span></div>
+          <div class="price-usd">≈ $110–900</div>
+          <div class="price-term">⏱ 3–20 дней</div>
+          <ul><li>Приём заявок</li><li>Онлайн-запись</li><li>Связка с CRM</li><li>Рассылки</li></ul>
+        </div>
+      </div>
+
+      <div class="panel price reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> mini-app</div>
+        <div class="panel-body">
+          <div class="panel-icon">📱</div>
+          <div class="panel-title">Telegram Mini App</div>
+          <div class="price-line"><span class="pvar">const</span> price =</div>
+          <div class="price-val">от 40 000 <span style="font-size:13px;color:var(--comment)">сом</span></div>
+          <div class="price-usd">≈ от $450</div>
+          <div class="price-term">⏱ от 2 недель</div>
+          <ul><li>Веб-интерфейс в TG</li><li>Каталог / запись</li><li>Оплата</li><li>Бэкенд</li></ul>
+        </div>
+      </div>
+
+      <div class="panel price reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> ai</div>
+        <div class="panel-body">
+          <div class="panel-icon">✨</div>
+          <div class="panel-title">AI / автоматизация</div>
+          <div class="price-line"><span class="pvar">const</span> price =</div>
+          <div class="price-val">от 20 000 <span style="font-size:13px;color:var(--comment)">сом</span></div>
+          <div class="price-usd">≈ от $225</div>
+          <div class="price-term">⏱ от 1 недели</div>
+          <ul><li>AI-ассистенты</li><li>Обработка данных</li><li>Генерация контента</li><li>Workflow</li></ul>
+        </div>
+      </div>
+
+      <div class="panel price reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> support</div>
+        <div class="panel-body">
+          <div class="panel-icon">🔧</div>
+          <div class="panel-title">Доработки и поддержка</div>
+          <div class="price-line"><span class="pvar">const</span> price =</div>
+          <div class="price-val">от 1 500 <span style="font-size:13px;color:var(--comment)">сом/час</span></div>
+          <div class="price-usd">≈ от $17/час</div>
+          <div class="price-term">📦 подписка от 5 000 сом/мес</div>
+          <ul><li>Правки и доработки</li><li>Обновления</li><li>Бэкапы</li><li>Консультации</li></ul>
+        </div>
+      </div>
+
+    </div>
+    <div class="note reveal">
+      <span class="cmt">/* </span><span class="h">note:</span> Возможны фиксированная стоимость, почасовая работа или поэтапная разработка. Предоплата 50%. <span class="cmt">*/</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SCOPE ===== -->
+<section id="scope">
+  <div class="wrap">
+    <div class="sec-label reveal"><b>//</b> scope</div>
+    <h2 class="sec-title reveal">Что входит / что нет</h2>
+    <p class="sec-sub reveal"><span class="cmt"># </span>Прозрачно фиксируем границы проекта до старта.</p>
+    <div class="scope-grid">
+
+      <div class="panel scope-col scope-in reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> <span class="green">included.txt</span></div>
+        <div class="panel-body">
+          <ul>
+            <li>Анализ задачи и консультация</li>
+            <li>Проектирование решения</li>
+            <li>Адаптация под мобильные</li>
+            <li>Базовая SEO-подготовка</li>
+            <li>Подключение домена и хостинга</li>
+            <li>Telegram-интеграции</li>
+            <li>Тестирование перед запуском</li>
+            <li>Гарантия 14 дней после сдачи</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel scope-col scope-out reveal">
+        <div class="panel-head"><span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span> <span class="red">extra.txt</span></div>
+        <div class="panel-body">
+          <ul>
+            <li>Домен и хостинг (от ~1 500 сом/год)</li>
+            <li>Платные плагины, темы и API</li>
+            <li>Профессиональные фото и видео</li>
+            <li>Копирайтинг / тексты</li>
+            <li>Платное SEO-продвижение и реклама</li>
+            <li>Наполнение большим объёмом контента</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS ===== -->
+<section id="process">
+  <div class="wrap">
+    <div class="sec-label reveal"><b>//</b> process</div>
+    <h2 class="sec-title reveal">Как работаем</h2>
+    <p class="sec-sub reveal"><span class="cmt"># </span>5 шагов от идеи до поддержки.</p>
+    <div class="steps">
+      <div class="step reveal"><div class="num">01.</div><div class="t">Бриф</div><div class="d">Обсуждаем задачу и цели</div></div>
+      <div class="step reveal"><div class="num">02.</div><div class="t">Решение</div><div class="d">Предлагаем стек и подход</div></div>
+      <div class="step reveal"><div class="num">03.</div><div class="t">Смета</div><div class="d">Фиксируем цену и сроки</div></div>
+      <div class="step reveal"><div class="num">04.</div><div class="t">Разработка</div><div class="d">Делаем и показываем этапы</div></div>
+      <div class="step reveal"><div class="num">05.</div><div class="t">Поддержка</div><div class="d">Сопровождаем после запуска</div></div>
+    </div>
+    <div class="terms">
+      <div class="term-card reveal"><div class="ic">💳</div><div class="t">Оплата</div><div class="d">Предоплата 50%, остаток после сдачи, крупные — поэтапно</div></div>
+      <div class="term-card reveal"><div class="ic">🛡️</div><div class="t">Гарантия</div><div class="d">Исправление ошибок 14 дней бесплатно</div></div>
+      <div class="term-card reveal"><div class="ic">📐</div><div class="t">Сроки</div><div class="d">Фиксируются перед стартом, правки в рамках ТЗ бесплатны</div></div>
+      <div class="term-card reveal"><div class="ic">🌍</div><div class="t">Формат</div><div class="d">Кыргызстан и удалённо</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA / CONTACT ===== -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-label reveal"><b>//</b> contact</div>
+    <div class="cta reveal">
+      <div class="chrome">
+        <span class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></span>
+        <span>$ ./contact --new-project</span>
+      </div>
+      <div class="cta-body">
+        <h2>Обсудим ваш проект?</h2>
+        <p><span class="cmt"># </span>Напишите — ответим, предложим решение и сориентируем по цене.</p>
+        <div class="cta-btns">
+          <a href="https://t.me/username" class="btn btn-blue">✈ Telegram</a>
+          <a href="https://wa.me/996XXXXXXXXX" class="btn btn-primary">💬 WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap foot">
+    <div class="foot-links">
+      <a href="https://t.me/username">Telegram</a>
+      <a href="https://wa.me/996XXXXXXXXX">WhatsApp</a>
+      <a href="mailto:email@example.com">Email</a>
+    </div>
+    <div class="cmt">© 2026 · Веб-разработка в Кыргызстане</div>
+  </div>
+</footer>
+
+<script>
+  // reveal on scroll
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){
+      els.forEach(function(e){e.classList.add('show')});return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){en.target.classList.add('show');io.unobserve(en.target);}
+      });
+    },{threshold:.12});
+    els.forEach(function(e){io.observe(e)});
+  })();
+  // close mobile menu on link click
+  document.querySelectorAll('#nav a').forEach(function(a){
+    a.addEventListener('click',function(){document.getElementById('nav').classList.remove('open')});
+  });
+</script>
+
+</body>
+</html>
