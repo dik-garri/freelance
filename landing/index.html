@@ -184,6 +184,7 @@
     <a href="#" class="logo"><span class="mark">🌿</span> Веб-студия</a>
     <nav class="menu">
       <a href="#services">Услуги</a>
+      <a href="#works">Работы</a>
       <a href="#pricing">Цены</a>
       <a href="#process">Как работаем</a>
       <a href="#contacts">Контакты</a>
@@ -193,6 +194,7 @@
   </div>
   <div class="mobile-menu" id="mmenu">
     <a href="#services">Услуги</a>
+    <a href="#works">Работы</a>
     <a href="#pricing">Цены</a>
     <a href="#process">Как работаем</a>
     <a href="#contacts">Контакты</a>
@@ -238,6 +240,99 @@
       <div class="card reveal"><div class="ico c2">✨</div><h3>AI и автоматизация</h3><ul class="feat"><li>AI-ассистенты</li><li>Генерация контента</li><li>Обработка данных</li><li>AI-workflow</li></ul></div>
       <div class="card reveal"><div class="ico c3">🔗</div><h3>Интеграции</h3><ul class="feat"><li>Аналитика</li><li>Google Sheets</li><li>Платёжные системы</li><li>Сторонние API</li></ul></div>
       <div class="card reveal"><div class="ico c4">🛠️</div><h3>Поддержка</h3><ul class="feat"><li>Доработки</li><li>Перенос со старых систем</li><li>Обновления и бэкапы</li><li>Консультации</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKS / PORTFOLIO -->
+<!-- ЗАМЕНИ карточки ниже на свои реальные кейсы: название, описание, теги, ссылку (href) и фон/эмодзи в .work-thumb (или вставь <img> со скриншотом) -->
+<style>
+  .works-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;position:relative;z-index:1}
+  @media(max-width:980px){.works-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.works-grid{grid-template-columns:1fr}}
+  .work{background:var(--card);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(127,166,106,.08);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column}
+  .work:hover{transform:translateY(-8px);box-shadow:0 28px 50px -22px rgba(60,80,50,.4)}
+  .work-thumb{height:180px;display:grid;place-items:center;font-size:56px;position:relative;overflow:hidden}
+  .work-thumb img{width:100%;height:100%;object-fit:cover}
+  .work-chip{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.92);color:var(--sage-d);font-weight:700;font-size:12px;padding:6px 12px;border-radius:999px;box-shadow:var(--shadow-sm)}
+  .work-body{padding:22px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .work-body h3{font-size:18px}
+  .work-body p{font-size:14.5px;color:var(--ink-2)}
+  .work-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+  .work-tags span{background:var(--bg-alt);color:var(--ink-2);font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px}
+  .work-link{font-weight:700;color:var(--sage-d);margin-top:auto;display:inline-flex;align-items:center;gap:6px}
+  .work-link:hover{color:var(--ink)}
+</style>
+<section class="pad" id="works">
+  <span class="blob b3" style="top:8%;left:-120px;right:auto;opacity:.32"></span>
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="kicker">Портфолио</span>
+      <h2>Наши работы</h2>
+      <p>Примеры проектов — от лендингов до интернет-магазинов, CRM и Telegram-сервисов.</p>
+    </div>
+    <div class="works-grid">
+
+      <a class="work reveal" href="#">
+        <div class="work-thumb" style="background:linear-gradient(135deg,#DCEACB,#B8D49A)">🛒<span class="work-chip">Интернет-магазин</span></div>
+        <div class="work-body">
+          <h3>Магазин одежды</h3>
+          <p>WooCommerce-магазин с фильтрами, оплатой онлайн и уведомлениями о заказах в Telegram.</p>
+          <div class="work-tags"><span>WordPress</span><span>WooCommerce</span><span>Telegram</span></div>
+          <span class="work-link">Открыть →</span>
+        </div>
+      </a>
+
+      <a class="work reveal" href="#">
+        <div class="work-thumb" style="background:linear-gradient(135deg,#F4DCC6,#EBBE96)">🏢<span class="work-chip">Корпоративный сайт</span></div>
+        <div class="work-body">
+          <h3>Строительная компания</h3>
+          <p>Многостраничный сайт с каталогом услуг, портфолио объектов и формой заявки. Мультиязычность.</p>
+          <div class="work-tags"><span>Сайт</span><span>Мультиязычность</span><span>SEO</span></div>
+          <span class="work-link">Открыть →</span>
+        </div>
+      </a>
+
+      <a class="work reveal" href="#">
+        <div class="work-thumb" style="background:linear-gradient(135deg,#CFE3E9,#A7CDD8)">🤖<span class="work-chip">Telegram-бот</span></div>
+        <div class="work-body">
+          <h3>Бот онлайн-записи</h3>
+          <p>Запись клиентов, напоминания и передача заявок в CRM. Снизил нагрузку на администратора.</p>
+          <div class="work-tags"><span>Telegram</span><span>CRM</span><span>Автоматизация</span></div>
+          <span class="work-link">Открыть →</span>
+        </div>
+      </a>
+
+      <a class="work reveal" href="#">
+        <div class="work-thumb" style="background:linear-gradient(135deg,#E3EAD6,#C6D8AE)">⚙️<span class="work-chip">CRM-система</span></div>
+        <div class="work-body">
+          <h3>CRM для отдела продаж</h3>
+          <p>Учёт заявок и сделок, роли и доступы, дашборд с аналитикой. Интеграция с сайтом и Telegram.</p>
+          <div class="work-tags"><span>Кастомная CRM</span><span>Аналитика</span><span>Роли</span></div>
+          <span class="work-link">Открыть →</span>
+        </div>
+      </a>
+
+      <a class="work reveal" href="#">
+        <div class="work-thumb" style="background:linear-gradient(135deg,#EFD9E6,#D9A7C7)">🌐<span class="work-chip">Landing Page</span></div>
+        <div class="work-body">
+          <h3>Лендинг услуги</h3>
+          <p>Продающая одностраничница с квизом и формой заявки. Подключена аналитика и пиксели.</p>
+          <div class="work-tags"><span>Landing</span><span>Квиз</span><span>Аналитика</span></div>
+          <span class="work-link">Открыть →</span>
+        </div>
+      </a>
+
+      <a class="work reveal" href="#">
+        <div class="work-thumb" style="background:linear-gradient(135deg,#F0E3CF,#E0C49C)">📱<span class="work-chip">Telegram Mini App</span></div>
+        <div class="work-body">
+          <h3>Каталог в Telegram</h3>
+          <p>Мини-приложение с каталогом, корзиной и оформлением заказа прямо внутри Telegram.</p>
+          <div class="work-tags"><span>Mini App</span><span>Каталог</span><span>Оплата</span></div>
+          <span class="work-link">Открыть →</span>
+        </div>
+      </a>
+
     </div>
   </div>
 </section>
